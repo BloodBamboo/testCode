@@ -1,21 +1,10 @@
 
 public class MyTree<T> {
 
-	public TreeNode rootNode;
-	
-	public static class TreeNode<T> {
-		public T t;
-		public TreeNode leftTreeNode;
-		public TreeNode rightTreeNode;
-		
-		public TreeNode(T t) {
-			this.t = t;
-		}
-	}
+	public MyTreeNode rootNode;
 	
 	
-	
-	public void pre(TreeNode node) {
+	public void pre(MyTreeNode node) {
 		if (node == null) {
 			return;
 		}
@@ -25,7 +14,7 @@ public class MyTree<T> {
 	}
 	
 	
-	public void mid(TreeNode node) {
+	public void mid(MyTreeNode node) {
 		if (node == null) {
 			return;
 		}
@@ -34,7 +23,7 @@ public class MyTree<T> {
 		mid(node.rightTreeNode);
 	}
 	
-	public void last(TreeNode node) {
+	public void last(MyTreeNode node) {
 		if (node == null) {
 			return;
 		}
@@ -53,15 +42,15 @@ public class MyTree<T> {
 	 */
 	public static void main(String[] args) {
 		MyTree<String> tree = new MyTree<String>();
-		tree.rootNode = new TreeNode<String>("a");
-		tree.rootNode.leftTreeNode = new TreeNode<String>("b");
-		tree.rootNode.rightTreeNode = new TreeNode<String>("c"); 
-		tree.rootNode.leftTreeNode.leftTreeNode = new TreeNode<String>("d");
-		tree.rootNode.leftTreeNode.rightTreeNode = new TreeNode<String>("e"); 
-		tree.rootNode.rightTreeNode.leftTreeNode = new TreeNode<String>("f");
-		tree.rootNode.rightTreeNode.rightTreeNode = new TreeNode<String>("g");
-		tree.rootNode.leftTreeNode.leftTreeNode.leftTreeNode = new TreeNode<String>("h");
-		tree.rootNode.leftTreeNode.leftTreeNode.rightTreeNode = new TreeNode<String>("i");
+		tree.rootNode = new MyTreeNode<String>("a");
+		tree.rootNode.leftTreeNode = new MyTreeNode<String>("b");
+		tree.rootNode.rightTreeNode = new MyTreeNode<String>("c"); 
+		tree.rootNode.leftTreeNode.leftTreeNode = new MyTreeNode<String>("d");
+		tree.rootNode.leftTreeNode.rightTreeNode = new MyTreeNode<String>("e"); 
+		tree.rootNode.rightTreeNode.leftTreeNode = new MyTreeNode<String>("f");
+		tree.rootNode.rightTreeNode.rightTreeNode = new MyTreeNode<String>("g");
+		tree.rootNode.leftTreeNode.leftTreeNode.leftTreeNode = new MyTreeNode<String>("h");
+		tree.rootNode.leftTreeNode.leftTreeNode.rightTreeNode = new MyTreeNode<String>("i");
 		
 		System.out.println("pre---------------");
 		tree.pre(tree.rootNode);
