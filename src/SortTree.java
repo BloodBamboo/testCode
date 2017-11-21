@@ -17,15 +17,45 @@ public class SortTree<T extends Comparable> {
 	}
 	
 	
+	public TwoTuple<MyTreeNode<T>, MyTreeNode<T>> searchNode4While(T t) {
+		if (rootNode == null) {
+			return null;
+		}
+		MyTreeNode<T> node = rootNode;
+		MyTreeNode<T> pNode = null;
+		while (node != null) {
+			pNode = node;
+			if (node.t.compareTo(t) == 0) {
+				return new TwoTuple<MyTreeNode<T>, MyTreeNode<T>>(node, pNode);
+			} else if (node.t.compareTo(t) > 0) {
+				node = node.leftTreeNode;
+			} else {
+				node = node.rightTreeNode;
+			}
+		}
+		
+		return new TwoTuple<MyTreeNode<T>, MyTreeNode<T>>(null, pNode);
+	}
+	
+	public void add4While(T t) {
+		TwoTuple<MyTreeNode<T>, MyTreeNode<T>> temp = searchNode4While(t);
+		if (temp == null) {
+			rootNode = new MyTreeNode<T>(t);
+		} else if (temp.second.t.compareTo(t) > 0){
+			temp.second.leftTreeNode = new MyTreeNode<T>(t);
+		} else if (temp.second.t.compareTo(t) < 0) {
+			temp.second.rightTreeNode = new MyTreeNode<T>(t);
+		}
+	}
+	
 	
 	public void add(T t) {
-		if (rootNode == null) {
+		MyTreeNode<T> temp = searchNode(rootNode, t, null);
+		if (temp == null) {
 			rootNode = new MyTreeNode<T>(t);
-		} else if (rootNode.t.compareTo(t) > 0){
-			MyTreeNode<T> temp = searchNode(rootNode.leftTreeNode, t, rootNode);
-			temp.leftTreeNode = new MyTreeNode<T>(t);;
-		} else if (rootNode.t.compareTo(t) < 0) {
-			MyTreeNode<T> temp = searchNode(rootNode.rightTreeNode, t, rootNode);
+		} else if (temp.t.compareTo(t) > 0){
+			temp.leftTreeNode = new MyTreeNode<T>(t);
+		} else if (temp.t.compareTo(t) < 0) {
 			temp.rightTreeNode = new MyTreeNode<T>(t);
 		}
 	}
@@ -70,7 +100,26 @@ public class SortTree<T extends Comparable> {
 			sortTree.add(numbers[i]);
 		}
 		
+		SortTree<Integer> sortTree1 = new SortTree<Integer>();
+		for (int i = 0; i < numbers.length; i++) {
+			sortTree1.add4While(numbers[i]);
+		}
+		
+		System.out.println("pre---------------");
+		sortTree.pre(sortTree.rootNode);
+		System.out.println("\n4whilepre---------------");
+		sortTree1.pre(sortTree1.rootNode);
+		System.out.println("\nmid---------------");
 		sortTree.mid(sortTree.rootNode);
+		System.out.println("\n4whilmid---------------");
+		sortTree1.mid(sortTree1.rootNode);
+		System.out.println("\nlast---------------");
+		sortTree.last(sortTree.rootNode);
+		System.out.println("\n4whillast---------------");
+		sortTree1.last(sortTree1.rootNode);
 	}
+	
+	
+	
 
 }

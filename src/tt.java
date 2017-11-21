@@ -34,6 +34,10 @@ public class tt {
 		
 		MyLinkList<String> numbers[] = new MyLinkList[10];
 		System.out.println(numbers[4]+"---------------");
+		
+		Integer  a = 5;
+		Integer b = 6;
+		System.out.println(a.compareTo(b));
 	}
 
 }
