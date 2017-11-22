@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Stack;
 
 
-public class HaffmanTree<T extends Comparable> {
+public class HaffmanTree<T> {
 	
 	public static class TreeNode<T> implements Comparable<TreeNode<T>> {
 
@@ -130,11 +130,11 @@ public class HaffmanTree<T extends Comparable> {
 	
 	public static void main(String[] args) {
 		HaffmanTree<String> tree = new HaffmanTree<String>("p");
-		Integer []array = {22,35,99,1,2,6,43,8,6,26, 11, 22};
-		List<Integer> list1 = new ArrayList<Integer>(array.length);
-		Collections.addAll(list1, array);
-		tree.sort4Min(list1);
-		System.out.println(list1 + "  " + list1.size());
+//		Integer []array = {22,35,99,1,2,6,43,8,6,26, 11, 22};
+//		List<Integer> list1 = new ArrayList<Integer>(array.length);
+//		Collections.addAll(list1, array);
+//		tree.sort4Min(list1);
+//		System.out.println(list1 + "  " + list1.size());
 		
 		
 		List<TreeNode<String>> list = new ArrayList<TreeNode<String>>();
