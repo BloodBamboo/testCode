@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+
+
 public class SearchBinaryTree<T extends Comparable> {
 	
 	public Node<T> root; 
@@ -180,20 +183,55 @@ public class SearchBinaryTree<T extends Comparable> {
 		pre(node.right);
 	}
 	
+	public void show() {
+		LinkedList<Node<T>> list = new LinkedList();
+		list.offer(root);
+		int i = 0;
+		while(!list.isEmpty()) {
+			Node<T> node = list.pop();
+			Node<T> p = node.parent;
+			int j = 0;
+			while(p != null) {
+				p = p.parent;
+				j++;
+			}
+			if (i != j) {
+				System.out.println();
+				i = j;
+			}
+			System.out.print(node.t + " ");
+			
+			if (node.left != null) {
+				list.offer(node.left);
+			}
+			if (node.right != null) {
+				list.offer(node.right);
+			}
+		}
+	}
 	
 	public static void main(String[] args) {
-		int[] arrays = {12, 3 ,23, 5 , 4, 8, 1, 11, 19};
+//		int[] arrays = {12, 3 ,23, 5 , 4, 8, 1, 11, 19};
+//		
+//		SearchBinaryTree tree = new SearchBinaryTree();
+//		
+//		for(int i = 0; i < arrays.length; i++) {
+//			tree.add(arrays[i]);
+//		}
+//		
+//		tree.mid(tree.root);
+//		System.out.println("-------------------------");
+//		tree.remove(tree.searchNode(3));
+//		tree.pre(tree.root);
+//		System.out.println("-------------------------");
 		
+		
+		int[] arrays = {3, 9 , 20 , 15, 7};
 		SearchBinaryTree tree = new SearchBinaryTree();
-		
+//		
 		for(int i = 0; i < arrays.length; i++) {
 			tree.add(arrays[i]);
 		}
-		
-		tree.mid(tree.root);
-		System.out.println("-------------------------");
-		tree.remove(tree.searchNode(3));
-		tree.pre(tree.root);
-		System.out.println("-------------------------");
+		tree.show();
 	}
 }

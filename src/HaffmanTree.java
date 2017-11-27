@@ -101,8 +101,6 @@ public class HaffmanTree<T> {
 				list.offer(node.right);
 			}
 		}
-		
-		
 	}
 	
 	public String getCode(TreeNode<T> node) {
