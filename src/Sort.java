@@ -96,6 +96,7 @@ public class Sort {
     }
 
 
+    //循环比赛日程安排示例
     public static int[][] schedule(int k) {
         int[][] schedule = new int[k][k];
         for (int i = 0; i < k; i++) {
