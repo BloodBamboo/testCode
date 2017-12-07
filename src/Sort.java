@@ -24,7 +24,7 @@ public class Sort {
 
     //快速排序   12  21  31  68  59  40       x=31
     public static void quickSort(int[] array, int begin, int end) {
-        if (begin > end) {
+        if (begin >= end) {
             return;
         }
         int low = begin;
@@ -48,6 +48,92 @@ public class Sort {
         quickSort(array, begin, low - 1);
         quickSort(array, low + 1, end);
     }
+
+    //三路快排
+    public static void threeQuickSort(int[] array, int begin, int end) {
+        if (begin >= end) {
+            return;
+        }
+
+          /*
+     * 工作指针
+     * q指向序列左边等于pivot元素的位置
+     * p指向序列右边等于Pivot元素的位置
+     * low指向从左向右扫面时的元素
+     * high指向从右向左扫描时的元素
+     */
+        int low = begin;
+        int high = end;
+        int q = begin;
+        int p = end;
+        /*
+         * 每次总是取序列最右边的元素为锚点
+         */
+        int pivot = array[begin];
+        while (low != high) {
+         /*
+         * 工作指针high从右向左不断扫描，找小于或者等于锚点元素的元素
+         */
+            while (high > low && pivot <= array[high]) {
+             /*
+             * 找到与锚点元素相等的元素将其交换到p所指示的位置
+             */
+                if (pivot == array[high]) {
+                    swap(array, p, high);
+                    p--;
+                }
+                high--;
+            }
+            /*
+            * 工作指针low从左向右不断扫描，找大于或者等于锚点元素的元素
+            */
+            while (high > low && pivot >= array[low]) {
+             /*
+             * 找到与锚点元素相等的元素将其交换到q所指示的位置
+             */
+                if (pivot == array[low]) {
+                    swap(array, q, low);
+                    q++;
+                }
+                low++;
+            }
+        /*
+         * 将左边大于pivot的元素与右边小于pivot元素进行交换
+         */
+            if (low < high) {
+                swap(array, low, high);
+            }
+        }
+ /*
+     * 因为工作指针high指向的是比描点大的值所以往后移动一个位置
+     * p指向的是当前需要处理元素的上一个元素，故而需要向后到当前元素的实际位置，然后将等于pivot元素交换到序列中间
+     */
+        high++;
+        p++;
+        while (p <= end && p != high) {
+            swap(array, p++, high++);
+        }
+        /*
+     * 因为工作指针q指向的是当前需要处理元素的下一个元素
+     * 故而需要退回到当前元素的实际位置，然后将等于pivot元素交换到序列中间
+     */
+        q--;
+        while (q >= begin && q != low) {
+            swap(array, q--, low--);
+        }
+    /*
+     * 递归遍历左右子序列
+     */
+        threeQuickSort(array, begin, low);
+        threeQuickSort(array, high, end);
+    }
+
+    public static void swap(int[] a, int src, int dest) {
+        int t = a[dest];
+        a[dest] = a[src];
+        a[src] = t;
+    }
+
 
     //归并合并    0    4    7
     public static void merge(int[] array, int left, int mid, int right) {
@@ -146,12 +232,18 @@ public class Sort {
 //            System.out.print(array[i]+" ");
 //        }
 
-        int[][] schedule = schedule(8);
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                System.out.print(schedule[i][j] + " ");
-            }
-            System.out.println();
+//        int[][] schedule = schedule(8);
+//        for (int i = 0; i < 8; i++) {
+//            for (int j = 0; j < 8; j++) {
+//                System.out.print(schedule[i][j] + " ");
+//            }
+//            System.out.println();
+//        }
+
+        int[] p = {1, 2, 1, 2, 1, 3, 3, 3, 2};//{7,1,7,1,2,7,2,3,1,3,1,3,4,5,6,0,5,0,0,6};//
+        threeQuickSort(p, 0, p.length - 1);
+        for (int i = 0; i < p.length; i++) {
+            System.out.print(p[i] + " ");
         }
     }
 }
