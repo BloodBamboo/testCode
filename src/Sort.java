@@ -1,3 +1,6 @@
+import java.util.LinkedList;
+
+
 /**
  * 常用排序算法合集
  */
@@ -212,8 +215,146 @@ public class Sort {
             }
         }
     }
+    
+    //链式基数排序
+    public static class Mahjong {
+		 public int a;
+		 public int b;
+		 
+		 public Mahjong(int a, int b) {
+			 this.a = a;
+			 this.b = b;
+		 }
+		 
+		 public String toString() {
+			return "(" + a+","+ b + ")" ;
+		 }
+	 }
+    private static void radixSort(LinkedList<Mahjong> list) {
+		LinkedList[] rankList = new LinkedList[9];
+		for(int i = 0; i < 9; i++) {
+			rankList[i] = new LinkedList();
+		}
+		
+		while(list.size() > 0) {
+			Mahjong m = list.pop();
+			rankList[m.b - 1].add(m);
+		}
+		
+		for (LinkedList l : rankList) {
+			list.addAll(l);
+		}
+		
+		LinkedList[] suitList = new LinkedList[3];
+		for(int i = 0; i < 3; i++) {
+			suitList[i] = new LinkedList();
+		}
+		
+		while(list.size() > 0) {
+			Mahjong m = list.pop();
+			suitList[m.a - 1].add(m);
+		}
+		
+		for (LinkedList l : suitList) {
+			list.addAll(l);
+		}
+	}
 
+	
+	 //希尔排序  step表示的是步长
+   public static void shellSort(int[] array,int step){
+   	for (int i = 0; i < step; i++) {
+   		for (int k = i + step; k < array.length; k += step) {
+   			int target = array[k];
+       		int j = k;
+       		while( j > step - 1 && target < array[j - step]) {
+       			array[j] = array[j - step];
+       			j -= step;
+       		}
+       		array[j] = target;
+   		}
+   	}
+   }
+	
 
+	//直接插入排序
+   public static void insertSort(int[] array){
+   	for (int i = 0; i < array.length; i++) {
+   		int target = array[i];
+   		int j = i;
+   		while( j > 0 && target < array[j - 1]) {
+   			array[j] = array[j - 1];
+   			j--;
+   		}
+   		array[j] = target;
+   	}
+   }
+   //堆排序
+   public static void heapSort(int[] array){
+	   //开始建堆
+       //从最后一个非叶子(array.length-1)/2结点开始建
+       for (int i = (array.length-1)/2; i>=0; i--) {
+           createHeap(array,array.length,i);
+       }
+       
+       //开始边输出堆顶，边调整堆
+       int n=array.length;//表求堆中元素的个数
+       while(n > 0) {
+    	   System.out.print(array[0]+" ");//根取走
+    	   //最后一个放到根上
+           array[0]=array[n-1];
+           n--;
+           //重新调整
+           createHeap(array,n,0);
+       }
+   }
+   
+   //需要完成一次建堆的过程(大堆)
+   //n:表示堆中有多少个数据
+   //k:准备进行筛选的节点
+   public static void createHeap(int[] array,int n,int k){
+	   int kLeft=2*k+1;//左孩子
+       int kRight=2*k+2;//右孩子
+        
+       if (kLeft >= n && kRight >= n) {//判断有没有子节点
+    	   return;
+       }
+       
+       int kLeftValue=Integer.MIN_VALUE;//大堆用最小值,小堆用最大值,后续判断刚好相反即可
+       int kRightValue= Integer.MIN_VALUE;
+       
+       if (kLeft < n) {
+    	   kLeftValue = array[kLeft];
+       }
+       
+       if (kRight < n) {
+    	   kRightValue = array[kRight];
+       }
+     //从最上往下递归
+       // 三个节点开始比大小(假设这个堆以前就是满足要求的,即根不存在了)
+       if (kLeftValue <= array[k] && array[k] >= kRightValue) {
+    	   return;
+       }
+       
+       if (kLeftValue < kRightValue ) {//左子树的处理
+    	   int t = array[k]; array[k] = array[kRight]; array[kRight] = t;
+    	   createHeap(array, n, kRight);
+       } else if (kLeftValue > kRightValue ){//右子树的处理
+    	   int t = array[k]; array[k] = array[kLeft]; array[kLeft] = t;
+    	   createHeap(array, n, kLeft);
+       }
+//       if(kLeftValue<kRightValue){//左子树的处理
+//           int t=array[k];array[k]=array[kLeft];array[kLeft]=t;
+//           createHeap(array,n,kLeft);
+//       }else{//右子树的处理
+//           int t=array[k];array[k]=array[kRight];array[kRight]=t;
+//           createHeap(array,n,kRight);
+//       }
+       
+   }
+   
+  
+	
     public static void main(String[] args) {
 //        int[] array=new int[]{1,2,4,9,13,20,22,29,34,35};
 //        int key=35;
@@ -240,10 +381,20 @@ public class Sort {
 //            System.out.println();
 //        }
 
-        int[] p = {1, 2, 1, 2, 1, 3, 3, 3, 2};//{7,1,7,1,2,7,2,3,1,3,1,3,4,5,6,0,5,0,0,6};//
-        threeQuickSort(p, 0, p.length - 1);
-        for (int i = 0; i < p.length; i++) {
-            System.out.print(p[i] + " ");
-        }
+//        int[] p = {1, 2, 1, 2, 1, 3, 3, 3, 2};//{7,1,7,1,2,7,2,3,1,3,1,3,4,5,6,0,5,0,0,6};//
+//        threeQuickSort(p, 0, p.length - 1);
+//        for (int i = 0; i < p.length; i++) {
+//            System.out.print(p[i] + " ");
+//        }
+    	
+//    	int[] array=new int[]{3,9,1,2,5,4,7,8,6};
+//		//insertSort(array);
+//		shellSort(array, 3);
+//		shellSort(array, 1);
+//		for (int i = 0; i < array.length; i++) {
+//            System.out.print(array[i]+" ");
+//        }
+    	 int[] array=new int[]{6,3,9,2,4,5,1,8,7};
+         heapSort(array);
     }
 }
