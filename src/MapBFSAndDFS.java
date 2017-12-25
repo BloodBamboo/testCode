@@ -55,7 +55,7 @@ public class MapBFSAndDFS {
 				tx = head.x + next[i][0];
 				ty = head.y + next[i][1];
 
-				if (tx < 1 || ty < 1 || tx > 9 || ty > 9) {
+				if (tx < 0 || ty < 0 || tx > 9 || ty > 9) {
 					continue;
 				}
 
@@ -101,7 +101,7 @@ public class MapBFSAndDFS {
 			tx = x + next[i][0];
 			ty = y + next[i][1];
 
-			if (tx < 1 || ty < 1 || tx > 9 || ty > 9) {
+			if (tx < 0 || ty < 0 || tx > 9 || ty > 9) {
 				continue;
 			}
 

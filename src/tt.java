@@ -1,38 +1,74 @@
+import java.util.Arrays;
 
 public class tt {
 
+    public static class ListNode {
+        int val;
+        ListNode next;
 
-	public static int removeDuplicates(int[] nums) {
-		int start = 0;
-		int end = 0;
-		int i = 0;
-		while (end < nums.length) {
-			if (nums[start] == nums[end]) {
-				i++;
-				end++;
-				if (i == 2) {
-					start++;
-					nums[start] = nums[start - 1];
-				}
-			} else {
-				i = 0;
-				start++;
-				nums[start] = nums[end];
-			}
-		}
+        ListNode(int x) {
+            val = x;
+        }
+    }
 
-		return start + 1;
-	}
+    public static class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode(int x) { val = x; }
+  }
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		int []p = {1, 1, 1, 2, 2,2,2,2,2,2, 3,4,4, 5};
 
-		System.out.println(removeDuplicates(p));
-		for(int i : p) {
-			System.out.print(i);
-		}
-	}
+
+    public static int minDepth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        return pre(root, 0);
+    }
+
+    public static int pre(TreeNode root, int l) {
+        if (root == null) {
+            return l;
+        }
+        l++;
+        if (root.left == null && root.right == null) {
+            return l;
+        }
+        int left = pre(root.left, l);
+        int right = pre(root.right, l);
+
+        if (root.left != null && root.right != null) {
+            return left < right ? left : right;
+        } else if (root.left != null) {
+            return left;
+        } else {
+            return right;
+        }
+    }
+
+    /**
+     * @param args
+     */
+
+    public static void main(String[] args) {
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+//        root.right = new TreeNode(3);
+//        root.left.left= new TreeNode(4);
+//        root.left.right= new TreeNode(5);
+        print(minDepth(root));
+    }
+
+
+
+
+
+    public static void print(Object o) {
+        System.out.print(o.toString());
+    }
+
+    public static void println(Object o) {
+        System.out.println(o.toString());
+    }
 }
